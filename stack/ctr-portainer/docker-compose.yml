@@ -17,4 +17,4 @@ services:
 
 networks:
   network-share:
-    external: tru
+    external: true
