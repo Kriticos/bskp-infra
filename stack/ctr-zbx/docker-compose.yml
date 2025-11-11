@@ -65,4 +65,6 @@ networks:
     ipam:
       config:
         - subnet: ${SUBNET}
+        asdasd
 
+asdasd
