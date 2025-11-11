@@ -1,6 +1,6 @@
 services:
   ctr-cloudflare:
-    image: ${RELEASE}
+    image: cloudflare/cloudflared:latest
     container_name: ${CONTAINER_NAME}
     restart: unless-stopped
     command: tunnel run
