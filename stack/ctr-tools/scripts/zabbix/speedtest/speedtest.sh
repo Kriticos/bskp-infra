@@ -1,7 +1,7 @@
 #!/bin/bash
 
 HOST="Link - Internet"
-ZABBIX_SERVER="172.18.0.3"
+ZABBIX_SERVER="172.18.0.30"
 
 # Roda o speedtest e captura saída JSON
 RESULT=$(speedtest --format=json)
