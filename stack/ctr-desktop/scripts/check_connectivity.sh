@@ -1,6 +1,6 @@
 #!/bin/bash 
  
-ZABBIX_SERVER="172.18.0.3" 
+ZABBIX_SERVER="172.18.0.30" 
 ZABBIX_HOST="Link - Fasternet" 
 ZABBIX_KEY="check.connectivity.level" 
  
