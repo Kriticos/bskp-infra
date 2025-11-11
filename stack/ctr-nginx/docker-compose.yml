@@ -1,18 +1,27 @@
 services:
-  ctr-nginx:
-    image: nginx:alpine
-    container_name: ${CONTAINER_NAME}
+  nginx-proxy-manager:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: srv-nginx
     restart: unless-stopped
-    volumes:
-      - ${VOL_CONF}
-      - ${VOL_TZ}
-      - ${VOL_LOCALTIME}
     ports:
-      - "81:80"
+      - '80:80'      # Porta HTTP
+      - '443:443'    # Porta HTTPS
+      - '81:81'      # Interface Web
+    environment:
+      DB_MYSQL_HOST: "srv-mysql"  # Usando seu MySQL existente
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: "npm"
+      DB_MYSQL_PASSWORD: "2vS&QsFWyRp7wVpG7mf"
+      DB_MYSQL_NAME: "nginxproxymanager"
+    volumes:
+      - /bskp/srv-nginx/data:/data
+      - /bskp/srv-nginx/letsencrypt:/etc/letsencrypt
     networks:
       network-share:
-        ipv4_address: ${IPV4_NGINX}
-
+        ipv4_address: 172.18.0.9
 networks:
   network-share:
     external: true
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
