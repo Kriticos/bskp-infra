@@ -1,0 +1,19 @@
+services:
+  ctr-fasternet:
+    build: .
+    container_name: ${CONTAINER_NAME}
+    restart: unless-stopped
+    volumes:
+      - ${VOL_SPEEDTEST_SCRIPT}
+      - ${VOL_CHECKCONNECT_SCRIPT}
+      - ${VOL_CRON}
+      - ${VOL_TIMEZONE}
+      - ${VOL_LOCALTIME}
+    command: ["cron", "-f"]
+    networks:
+      network-share:
+        ipv4_address: ${IPV4_FASTERNET}
+
+networks:
+  network-share:
+    external: true
