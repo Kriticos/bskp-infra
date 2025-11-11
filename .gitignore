@@ -1,5 +1,6 @@
-# Ignore todos os arquivos .env em qualquer pasta
+# Ignore os arquivos em qualquer pasta
 **/.env
+**/odbc.ini
 
 # ctr-grafana (Ignorar pastas de configuração e dados)
 /stack/ctr-grafana/config
