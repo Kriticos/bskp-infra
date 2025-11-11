@@ -1,0 +1,28 @@
+services:
+  nginx-proxy-manager:
+    image: '${IMAGE}'
+    container_name: '${CONTAINER_NAME}'
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+      - '81:81'
+    environment:
+      DB_MYSQL_HOST: '${DB_MYSQL_HOST}'
+      DB_MYSQL_PORT: '${DB_MYSQL_PORT}'
+      DB_MYSQL_USER: '${DB_MYSQL_USER}'
+      DB_MYSQL_PASSWORD: '${DB_MYSQL_PASSWORD}'
+      DB_MYSQL_NAME: '${DB_MYSQL_NAME}'
+    volumes:
+      - '${VOL_DATA}'
+      - '${VOL_LETSENCRYPT}'
+    networks:
+      network-share:
+        ipv4_address: '${IPV4_NGINX}'
+
+networks:
+  network-share:
+    external: true
+    ipam:
+      config:
+        - subnet: '${SUBNET}'
