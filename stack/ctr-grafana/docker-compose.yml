@@ -1,5 +1,5 @@
 services:
-  ctr-grafana:
+  grafana:
     image: grafana/grafana:${RELEASE}
     environment:
       DB_SERVER_HOST: ${DB_SERVER_HOST}
