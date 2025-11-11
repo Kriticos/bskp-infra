@@ -3,8 +3,7 @@
 **/odbc.ini
 
 # ctr-portainer (Ignorar pastas de configuração e dados)
-/stacks/ctr-portainer/data
-
+/stack/ctr-portainer/data
 
 # ctr-grafana (Ignorar pastas de configuração e dados)
 /stack/ctr-grafana/config
