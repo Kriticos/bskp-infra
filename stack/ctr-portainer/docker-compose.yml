@@ -13,7 +13,7 @@ services:
       - ${VOL_LOCALTIME}
     networks:
       network-share:
-        ipv4_address: ${IPV4_PORTAINER}
+        ipv4_address: ${IPV4_ADDRESS}
 
 networks:
   network-share:
