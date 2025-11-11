@@ -6,7 +6,7 @@
 
 # Configurações
 ZBX_HOST="Link - Internet"
-ZBX_SERVER="172.18.0.3"
+ZBX_SERVER="172.18.0.30"
 LOG_FILE="/var/log/connectivity_check.log"
 
 # Parâmetros de configuração
