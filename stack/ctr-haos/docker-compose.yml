@@ -1,0 +1,22 @@
+services:
+  ctr-ha:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    container_name: ${CONTAINER_NAME}
+    restart: unless-stopped
+    privileged: true
+    volumes:
+      - ${VOL_CONFIG}
+      - ${VOL_TZ}
+      - ${VOL_LOCALTIME}
+    ports:
+      - "8123:8123"
+    networks:
+      network-share:
+        ipv4_address: ${IPV4_HA}
+
+networks:
+  network-share:
+    external: true
+    ipam:
+      config:
+        - subnet: ${SUBNET}
