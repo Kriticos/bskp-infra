@@ -4,7 +4,6 @@ services:
     container_name: ${CONTAINER_NAME}
     restart: unless-stopped
     command: tunnel run
-    env_file: .env
     environment:
       - TUNNEL_TOKEN=${TUNNEL_TOKEN}
     networks:
