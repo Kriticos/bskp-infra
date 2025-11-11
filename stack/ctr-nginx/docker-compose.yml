@@ -14,8 +14,10 @@ services:
       DB_MYSQL_PASSWORD: '${DB_MYSQL_PASSWORD}'
       DB_MYSQL_NAME: '${DB_MYSQL_NAME}'
     volumes:
-      - '${VOL_DATA}'
-      - '${VOL_LETSENCRYPT}'
+      - ${VOL_NGINX_DATA}
+      - ${VOL_NGINX_LETSENCRYPT}
+      - ${VOL_TZ}
+      - ${VOL_LOCALTIME}
     networks:
       network-share:
         ipv4_address: '${IPV4_NGINX}'
