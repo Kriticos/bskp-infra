@@ -1,6 +1,7 @@
 services:
-  grafana:
+  ctr-grafana:
     image: grafana/grafana:${RELEASE}
+    container_name: ${CONTAINER_NAME}
     environment:
       DB_SERVER_HOST: ${DB_SERVER_HOST}
       GF_SECURITY_ADMIN_PASSWORD: ${ADMIN_PASSWD}
