@@ -1,0 +1,19 @@
+services:
+  ctr-grafana:
+    image: grafana/grafana:latest
+    container_name: ${CONTAINER_NAME}
+    restart: unless-stopped
+    user: "0"
+    ports:
+      - "3080:3000"
+    volumes:
+      - ${VOL_DATA}
+      - ${VOL_TZ}
+      - ${VOL_LOCALTIME}
+    networks:
+      network-share:
+        ipv4_address: ${IPV4_GRAFANA}
+
+networks:
+  network-share:
+    external: true
