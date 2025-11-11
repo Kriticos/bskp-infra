@@ -1,0 +1,5 @@
+*/3 * * * * /usr/bin/php8.3 /var/www/html/glpi/scripts/ldap_mass_sync.php
+*/5 * * * * /var/www/html/glpi/scripts/importuser-all.sh
+*/1 * * * * /usr/bin/php8.3 /var/www/html/glpi/front/cron.php --force mailgate >/dev/null
+*/1 * * * * /usr/bin/php8.3 /var/www/html/glpi/front/cron.php --force queuedmail >/dev/null
+* * * * * echo "Cron está rodando $(date)" >> /tmp/glpi_cron.log
