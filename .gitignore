@@ -7,7 +7,5 @@
 /stack/ctr-grafana/data
 
 # ctr-portainer (Ignorar pastas de configuração e dados)
-/stacks/ctr-portainer/localtime
-/stacks/ctr-portainer/timezone
 /stacks/ctr-portainer/stacks
 
