@@ -1,8 +1,6 @@
 services:
   srv-grafana:
     image: grafana/grafana:${RELEASE}
-    env_file:
-      - .env
     container_name: ${SRV_GRAFANA_HOST}
     environment:
       DB_SERVER_HOST: ${DB_SERVER_HOST}
