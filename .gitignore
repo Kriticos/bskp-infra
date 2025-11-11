@@ -1,3 +1,5 @@
 /stack/des-portainer/data/
 /stack/des-mysql/data
 /stack/des-grafana/data
+/stack/des-influxdb/data
+stack/*/.env
