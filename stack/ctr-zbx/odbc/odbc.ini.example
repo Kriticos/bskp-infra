@@ -1,0 +1,7 @@
+[QuestorDB]
+Driver = ODBC Driver 18 for SQL Server
+Server = IP_DO_SERVIDOR
+Database = BASE_DE_DADOS
+UID = USUARIO
+PWD = SENHA_DO_USUARIO
+TrustServerCertificate = Yes
