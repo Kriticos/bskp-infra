@@ -12,7 +12,7 @@ services:
     command: ["cron", "-f"]
     networks:
       network-share:
-        ipv4_address: ${IPV4_FASTERNET}
+        ipv4_address: ${IPV4_ADDRESS}
 
 networks:
   network-share:
