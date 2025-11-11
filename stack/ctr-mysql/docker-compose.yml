@@ -1,7 +1,7 @@
 services:
   srv-mysql:
     image: ${RELEASE}
-    container_name: ${SRV_HOST}
+    container_name: ${CONTAINER_NAME}
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
