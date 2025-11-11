@@ -1,5 +1,5 @@
 services:
-  srv-grafana:
+  ctr-grafana:
     image: grafana/grafana:${RELEASE}
     container_name: ${SRV_GRAFANA_HOST}
     environment:
