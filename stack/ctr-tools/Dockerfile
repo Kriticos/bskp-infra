@@ -17,7 +17,7 @@ RUN apt update && apt install -y \
     zip \
     iproute2 \
     dnsutils \
-    iputils-ping \ 
+    iputils-ping \
     lsb-release \
     ca-certificates && \
     apt clean && rm -rf /var/lib/apt/lists/*
@@ -46,4 +46,3 @@ RUN touch /var/log/cron.log
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["cron", "-f"]
