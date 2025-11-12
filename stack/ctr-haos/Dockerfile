@@ -1,16 +1,16 @@
 # ───────────────────────────────────────────────
-# Home Assistant + HACS
-# Base: imagem oficial do Home Assistant
+# Home Assistant + HACS (instalação via git)
 # ───────────────────────────────────────────────
 FROM ghcr.io/home-assistant/home-assistant:stable
 
-# Diretório de trabalho (configuração do HA)
+# Diretório de configuração
 WORKDIR /config
 
-# Instala dependências básicas e baixa o HACS
-RUN apk add --no-cache wget bash git \
-    && wget -O - https://get.hacs.xyz | bash - \
-    && apk del wget git bash
+# Instala dependências, baixa o HACS e remove pacotes temporários
+RUN apk add --no-cache git \
+    && mkdir -p custom_components \
+    && git clone --depth 1 https://github.com/hacs/integration.git custom_components/hacs \
+    && apk del git
 
 # Define o ponto de entrada padrão
 CMD [ "bash", "-c", "python -m homeassistant --config /config" ]
