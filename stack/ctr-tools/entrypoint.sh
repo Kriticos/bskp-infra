@@ -1,8 +1,8 @@
 #!/bin/bash
 CONFIG_PATH="/root/.config/ookla/speedtest-cli.json"
 
+# Aceita licença do Speedtest (só se ainda não existir)
 mkdir -p "$(dirname "$CONFIG_PATH")"
-
 if [ ! -f "$CONFIG_PATH" ]; then
   echo "Registrando aceite da licença do speedtest..."
   cat <<EOF > "$CONFIG_PATH"
@@ -16,8 +16,8 @@ if [ ! -f "$CONFIG_PATH" ]; then
 EOF
 fi
 
-echo "Iniciando serviço cron..."
-service cron start
+echo "Iniciando cron em foreground..."
+touch /var/log/cron.log
 
-# Mantém o container ativo e repassa parâmetros (se houver)
-exec "$@"
+# Mantém o container vivo executando o cron
+exec cron -f
