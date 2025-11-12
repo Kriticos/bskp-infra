@@ -17,6 +17,8 @@
 
 # ctr-nginx-proxy-manager (Ignorar pastas de configuração e dados)
 /stack/ctr-nginx/data
+/stack/ctr-nginx/letsencrypt
+/stack/ctr-nginx/accounts
 
 # Database do BSKP (Ignorar pastas de configuração e dados)
 /databases
