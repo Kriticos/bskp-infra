@@ -16,7 +16,7 @@
 /stack/ctr-haos
 
 # ctr-nginx-proxy-manager (Ignorar pastas de configuração e dados)
-/bskp-pro/stack/ctr-nginx/data
+/stack/ctr-nginx/data
 
 # Database do BSKP (Ignorar pastas de configuração e dados)
-/bskp-pro/databases
+/databases
