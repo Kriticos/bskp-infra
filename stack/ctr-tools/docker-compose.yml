@@ -7,8 +7,8 @@ services:
     tty: true
     stdin_open: true
     volumes:
-      - ${SCRIPTS_DIR}:/scripts
-      - ${VOL_CRON}:/etc/cron.d
+      - ${SCRIPTS_DIR}
+      - ${VOL_CRON}
       - ${LOCALTIME_FILE}:/etc/localtime:ro
       - ${TZ_FILE}:/etc/timezone:ro
     networks:
