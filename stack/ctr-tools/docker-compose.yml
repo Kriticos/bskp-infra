@@ -8,7 +8,7 @@ services:
     stdin_open: true
     volumes:
       - ${SCRIPTS_DIR}:/scripts
-      - ${CRON_DIR}:/etc/cron.d
+      - ${VOL_CRON}:/etc/cron.d
       - ${LOCALTIME_FILE}:/etc/localtime:ro
       - ${TZ_FILE}:/etc/timezone:ro
     networks:
