@@ -1,3 +1,4 @@
 # m h dom mon dow user command
-*/10 * * * * root /scripts/zabbix/speedtest/speedtest.sh > /tmp/speedtest.log 2>&1
-* * * * * root /scripts/zabbix/speedtest/check_connectivity_level.sh > /tmp/check_connectivity_level.log 2>&1
+*/10 * * * * root /usr/local/bin/speedtest.sh > /tmp/speedtest.log 2>&1
+*/1  * * * * root /usr/local/bin/check_connectivity.sh > /tmp/check_connectivity_level.log 2>&1
+0 23 * * *   root /usr/local/bin/clean_logs.sh >/dev/null 2>&1
