@@ -2,7 +2,7 @@ services:
   debian-tools:
     container_name: ${SRV_NAME}
     build: .
-    image: ${IMAGE_NAME}
+    image: local/${IMAGE_NAME}
     restart: ${RESTART_POLICY}
     tty: true
     stdin_open: true
