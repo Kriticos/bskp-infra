@@ -12,7 +12,11 @@
 /stack/ctr-grafana/config
 /stack/ctr-grafana/data
 
+# ctr-haos (Ignorar pastas de configuração e dados)
 /stack/ctr-haos
+
+# ctr-nginx-proxy-manager (Ignorar pastas de configuração e dados)
+/bskp-pro/stack/ctr-nginx/data
 
 # Database do BSKP (Ignorar pastas de configuração e dados)
 /bskp-pro/databases
