@@ -30,13 +30,15 @@ RUN curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/scr
     apt clean && rm -rf /var/lib/apt/lists/*
 
 # -------------------------------------------------------------------
-# Instala Zabbix Sender (versão 7.2 estável, compatível com Bookworm)
+# Instala Zabbix Sender diretamente (versão 7.2.9)
 # -------------------------------------------------------------------
-RUN wget https://repo.zabbix.com/zabbix/7.2/stable/debian/pool/main/z/zabbix/zabbix-sender_7.2.9-1%2Bdebian12_amd64.deb && \
-    dpkg -i zabbix-release_7.2-1+debian12_all.deb && \
-    apt update && apt install -y zabbix-sender && \
-    rm -f zabbix-release_7.2-1+debian12_all.deb && \
-    apt clean && rm -rf /var/lib/apt/lists/*
+RUN set -eux; \
+    wget -q https://repo.zabbix.com/zabbix/7.2/stable/debian/pool/main/z/zabbix/zabbix-sender_7.2.9-1+debian12_amd64.deb; \
+    apt install -y ./zabbix-sender_7.2.9-1+debian12_amd64.deb; \
+    rm -f zabbix-sender_7.2.9-1+debian12_amd64.deb; \
+    apt clean; \
+    rm -rf /var/lib/apt/lists/*
+
 
 # -------------------------------------------------------------------
 # Configuração de logs e scripts
