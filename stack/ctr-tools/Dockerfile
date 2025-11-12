@@ -30,6 +30,7 @@ RUN wget https://repo.zabbix.com/zabbix/7.2/stable/debian/pool/main/z/zabbix/zab
  && rm -f zabbix-agent_7.2.4-1+debian12_amd64.deb
 
 COPY entrypoint.sh /entrypoint.sh
+RUN chmod -R +x /scripts
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["cron", "-f"]
