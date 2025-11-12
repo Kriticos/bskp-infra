@@ -10,12 +10,12 @@ install_or_update_hacs() {
     apk add --no-cache git > /dev/null
 
     if [ ! -d "$HACS_DIR" ]; then
-        echo "📦 Instalando HACS (primeira vez)..."
+        echo "📦 Instalando HACS (estrutura correta)..."
         mkdir -p "$CONFIG_DIR/custom_components"
         git clone --depth 1 https://github.com/hacs/integration.git "$TMP_HACS"
         cp -r "$TMP_HACS/custom_components/hacs" "$CONFIG_DIR/custom_components/"
         rm -rf "$TMP_HACS"
-        echo "✅ HACS instalado com sucesso!"
+        echo "✅ HACS instalado corretamente em $HACS_DIR"
     else
         echo "🔄 Atualizando HACS..."
         git -C "$HACS_DIR" pull --ff-only || true
@@ -29,7 +29,7 @@ install_or_update_hacs() {
     apk del git > /dev/null
 }
 
-# Executa a função de instalação/atualização
 install_or_update_hacs
 
-# Inicia o Home Assistan
+echo "🚀 Iniciando Home Assistant..."
+exec python -m homeassistant --config "$CONFIG_DIR"
