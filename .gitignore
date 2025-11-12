@@ -12,5 +12,7 @@
 /stack/ctr-grafana/config
 /stack/ctr-grafana/data
 
+/stack/ctr-haos
+
 # Database do BSKP (Ignorar pastas de configuração e dados)
 /bskp-pro/databases
