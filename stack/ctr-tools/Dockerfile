@@ -32,7 +32,7 @@ RUN curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/scr
 # -------------------------------------------------------------------
 # Instala Zabbix Sender (versão 7.2 estável, compatível com Bookworm)
 # -------------------------------------------------------------------
-RUN wget https://repo.zabbix.com/zabbix/7.2/stable/debian/pool/main/z/zabbix/zabbix-agent2_7.2.6-1%2Bdebian10_amd64.deb && \
+RUN wget https://repo.zabbix.com/zabbix/7.2/stable/debian/pool/main/z/zabbix/zabbix-sender_7.2.9-1%2Bdebian12_amd64.deb && \
     dpkg -i zabbix-release_7.2-1+debian12_all.deb && \
     apt update && apt install -y zabbix-sender && \
     rm -f zabbix-release_7.2-1+debian12_all.deb && \
