@@ -1,6 +1,6 @@
 services:
-  ctr-ha:
-    image: ghcr.io/home-assistant/home-assistant:stable
+  ctr-haos:
+    build: .
     container_name: ${CONTAINER_NAME}
     restart: unless-stopped
     privileged: true
@@ -17,6 +17,3 @@ services:
 networks:
   network-share:
     external: true
-    ipam:
-      config:
-        - subnet: ${SUBNET}
