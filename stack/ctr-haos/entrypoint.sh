@@ -9,6 +9,9 @@ install_or_update_hacs() {
     echo "🔎 Verificando HACS..."
     apk add --no-cache git > /dev/null
 
+    # Corrige warning de ownership (git safe.directory)
+    git config --global --add safe.directory "$HACS_DIR" || true
+
     if [ ! -d "$HACS_DIR" ]; then
         echo "📦 Instalando HACS (estrutura correta)..."
         mkdir -p "$CONFIG_DIR/custom_components"
@@ -22,7 +25,7 @@ install_or_update_hacs() {
         echo "✅ HACS atualizado (ou já estava na última versão)"
     fi
 
-    # Corrige permissões
+    # Corrige permissões (UID 1000)
     chown -R 1000:1000 "$CONFIG_DIR/custom_components"
     chmod -R 755 "$CONFIG_DIR/custom_components"
 
