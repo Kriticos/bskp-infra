@@ -17,7 +17,7 @@ services:
     volumes:
       - ${VOL_LOCALTIME}
       - ${VOL_TIMEZONE}
-      - ${VOL_ODBCINI_PATH}
+      - ${VOL_ODBC_INI}
     networks:
       network-share:
         ipv4_address: ${IPV4_ZBX_SERVER_HOST}
