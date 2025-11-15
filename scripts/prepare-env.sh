@@ -5,13 +5,9 @@ echo "📁 Iniciando preparação das pastas do ambiente..."
 # Diretório base
 BASE_DIR="/bskp-pro"
 
-# Pastas de databasesbases
-DATABASES_DIRS=(
-  "$BASE_DIR/databases"
-)
-
 # Pastas de dados (volumes persistentes)
 DATA_DIRS=(
+  "$BASE_DIR/data/mysql"
   "$BASE_DIR/data/grafana"
   "$BASE_DIR/data/nginx"
   "$BASE_DIR/data/glpi"
