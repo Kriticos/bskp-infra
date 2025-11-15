@@ -4,7 +4,18 @@ services:
     container_name: ${CONTAINER_NAME}
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-    command: --character-set-server=utf8 --collation-server=utf8_bin
+      MYSQL_GLPI_USER: ${MYSQL_GLPI_USER}
+      MYSQL_GLPI_PASSWORD: ${MYSQL_GLPI_PASSWORD}
+      MYSQL_ZBX_USER: ${MYSQL_ZBX_USER}
+      MYSQL_ZBX_PASSWORD: ${MYSQL_ZBX_PASSWORD}
+      MYSQL_GRAFANA_USER: ${MYSQL_GRAFANA_USER}
+      MYSQL_GRAFANA_PASSWORD: ${MYSQL_GRAFANA_PASSWORD}
+      MYSQL_NGINX_USER: ${MYSQL_NGINX_USER}
+      MYSQL_NGINX_PASSWORD: ${MYSQL_NGINX_PASSWORD}
+      MYSQL_BSKP_USER: ${MYSQL_BSKP_USER}
+      MYSQL_BSKP_PASSWORD: ${MYSQL_BSKP_PASSWORD}
+
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
       - ${VOL_DATABASES_PATH}
       - ${VOL_MYSQL_INIT}
