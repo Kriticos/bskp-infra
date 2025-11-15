@@ -6,7 +6,7 @@ echo "📁 Iniciando preparação das pastas do ambiente..."
 BASE_DIR="/bskp-pro"
 
 # Pastas de databasesbases
-databases_DIRS=(
+DATABASES_DIRS=(
   "$BASE_DIR/databases"
 )
 
@@ -32,7 +32,7 @@ BACKUP_DIRS=(
 )
 
 # Criando diretórios
-for DIR in "${DATA_DIRS[@]}" "${SERVICE_DIRS[@]}" "${BACKUP_DIRS[@]}"; do
+for DIR in "${DATA_DIRS[@]}" "${DATABASES_DIRS[@]}" "${BACKUP_DIRS[@]}"; do
   if [ ! -d "$DIR" ]; then
     echo "📂 Criando $DIR"
     mkdir -p "$DIR"
