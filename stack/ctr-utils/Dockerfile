@@ -20,6 +20,13 @@ RUN apt update && apt install -y \
     iproute2 \
     dnsutils \
     iputils-ping \
+    procps \
+    net-tools \
+    iputils-tracepath \
+    mtr-tiny \
+    htop \
+    git \
+    tzdata \
     lsb-release \
     ca-certificates \
     && apt clean && rm -rf /var/lib/apt/lists/*
