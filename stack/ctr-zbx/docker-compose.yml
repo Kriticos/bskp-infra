@@ -1,56 +1,64 @@
+
 services:
-
-  ctr-zbx:
-    build: .
-    image: zabbix-server-custom:7.4
-    container_name: ${ZBX_CONTAINER_NAME}
-    restart: unless-stopped
+  zbx-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: bskp-pro:zbx-odbc
+    container_name: ${ZBX_SERVER_HOST}
     environment:
-      DB_SERVER_HOST: ${MYSQL_HOST}
+      DB_SERVER_HOST: ${DB_SERVER_HOST}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      ZBX_JAVAGATEWAY_ENABLE: "false"
+    ports:
+      - ${PORTS_ZBX}
     volumes:
-      - ${VOL_ZBX_SERVER}
-      - ${VOL_TIMEZONE}
       - ${VOL_LOCALTIME}
+      - ${VOL_TIMEZONE}
+      - ${VOL_ODBC_INI}
     networks:
       network-share:
-        ipv4_address: ${ZBX_IPV4}
-
-  ctr-zbx-front:
-    image: zabbix/zabbix-web-nginx-mysql:ubuntu-7.4-latest
-    container_name: ${ZBX_FRONT_CONTAINER_NAME}
+        ipv4_address: ${IPV4_ZBX_SERVER_HOST}
     restart: unless-stopped
+
+  zbx-frontend:
+    image: zabbix/zabbix-web-apache-mysql:${RELEASE}
+    container_name: ${ZBX_SERVER_FRONTEND}
     environment:
-      DB_SERVER_HOST: ${MYSQL_HOST}
+      ZBX_SERVER_HOST: ${ZBX_SERVER_HOST}
+      DB_SERVER_HOST: ${DB_SERVER_HOST}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      ZBX_SERVER_HOST: ${ZBX_CONTAINER_NAME}
-      PHP_TZ: "America/Sao_Paulo"
-    volumes:
-      - ${VOL_ZBX_FRONT}
-      - ${VOL_TIMEZONE}
-      - ${VOL_LOCALTIME}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      PHP_TZ: ${PHP_TZ}
     ports:
-      - "${ZBX_FRONT_PORT}:8080"
+      - ${PORTS_FRONTEND}
+    volumes:
+      - ${VOL_LOCALTIME}
+      - ${VOL_TIMEZONE}
     networks:
       network-share:
-        ipv4_address: ${ZBX_FRONT_IPV4}
-
-  ctr-zbx-agent:
-    image: zabbix/zabbix-agent2:ubuntu-7.4-latest
-    container_name: ${ZBX_AGENT_CONTAINER_NAME}
+        ipv4_address: ${IPV4_ZBX_FRONTEND}
     restart: unless-stopped
+
+  zbx-agent:
+    image: zabbix/zabbix-agent2:${RELEASE}
+    container_name: ${ZBX_SERVER_AGENT}
     environment:
-      ZBX_SERVER_HOST: ${ZBX_CONTAINER_NAME}
-      ZBX_ACTIVE_ALLOW: "true"
+      ZBX_HOSTNAME: ${ZBX_SERVER_HOST}
+      ZBX_SERVER_HOST: ${ZBX_SERVER_HOST}
+    ports:
+      - ${PORTS_AGENT}
+    volumes:
+      - ${VOL_LOCALTIME}
+      - ${VOL_TIMEZONE}
     networks:
       network-share:
-        ipv4_address: ${ZBX_AGENT_IPV4}
+        ipv4_address: ${IPV4_ZBX_AGENT}
+    restart: unless-stopped
 
 networks:
   network-share:
