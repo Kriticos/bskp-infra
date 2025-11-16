@@ -1,12 +1,26 @@
 #!/bin/bash
 
-echo "[INFO] Iniciando ctr-utils..."
+CONFIG_PATH="/root/.config/ookla/speedtest-cli.json"
 
-# Garantir permissões (se necessário)
-chmod -R 755 /usr/local/bin/scripts
+# Aceita licença do Speedtest (só se ainda não existir)
+mkdir -p "$(dirname "$CONFIG_PATH")"
 
-# Iniciar cron
-service cron start
+if [ ! -f "$CONFIG_PATH" ]; then
+    echo "Registrando aceite da licença do speedtest..."
+    cat <<EOF > "$CONFIG_PATH"
+{
+  "LicenseAccepted": true,
+  "Settings": {
+    "LicenseAccepted": "604ec27f828456331ebf441826292c49276bd3c1bee1a2f65a6452f505c4061c",
+    "GDPRTimeStamp": $(date +%s)
+  }
+}
+EOF
+fi
 
-# Exibir log em tempo real
-tail -f /var/log/cron.log
+echo "Iniciando cron em foreground..."
+
+touch /var/log/cron.log
+
+# Mantém o container vivo executando o cron
+exec cron -f
