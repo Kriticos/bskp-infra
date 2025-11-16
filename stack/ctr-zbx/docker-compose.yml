@@ -13,7 +13,7 @@ services:
       ZBX_JAVAGATEWAY_ENABLE: "false"
     volumes:
       - ${VOL_ZBX_SERVER}
-      - ${VOL_TZ}
+      - ${VOL_TIMEZONE}
       - ${VOL_LOCALTIME}
     networks:
       network-share:
@@ -32,7 +32,7 @@ services:
       PHP_TZ: "America/Sao_Paulo"
     volumes:
       - ${VOL_ZBX_FRONT}
-      - ${VOL_TZ}
+      - ${VOL_TIMEZONE}
       - ${VOL_LOCALTIME}
     ports:
       - "${ZBX_FRONT_PORT}:8080"
