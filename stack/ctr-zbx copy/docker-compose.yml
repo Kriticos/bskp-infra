@@ -1,0 +1,68 @@
+
+services:
+  zbx-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: zabbix-server-odbc:latest
+    container_name: ${ZBX_SERVER_HOST}
+    environment:
+      DB_SERVER_HOST: ${DB_SERVER_HOST}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - ${PORTS_ZBX}
+    volumes:
+      - ${VOL_LOCALTIME}
+      - ${VOL_TIMEZONE}
+      - ${VOL_ODBC_INI}
+    networks:
+      network-share:
+        ipv4_address: ${IPV4_ZBX_SERVER_HOST}
+    restart: unless-stopped
+
+  zbx-frontend:
+    image: zabbix/zabbix-web-apache-mysql:${RELEASE}
+    container_name: ${ZBX_SERVER_FRONTEND}
+    environment:
+      ZBX_SERVER_HOST: ${ZBX_SERVER_HOST}
+      DB_SERVER_HOST: ${DB_SERVER_HOST}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      PHP_TZ: ${PHP_TZ}
+    ports:
+      - ${PORTS_FRONTEND}
+    volumes:
+      - ${VOL_LOCALTIME}
+      - ${VOL_TIMEZONE}
+    networks:
+      network-share:
+        ipv4_address: ${IPV4_ZBX_FRONTEND}
+    restart: unless-stopped
+
+  zbx-agent:
+    image: zabbix/zabbix-agent2:${RELEASE}
+    container_name: ${ZBX_SERVER_AGENT}
+    environment:
+      ZBX_HOSTNAME: ${ZBX_SERVER_HOST}
+      ZBX_SERVER_HOST: ${ZBX_SERVER_HOST}
+    ports:
+      - ${PORTS_AGENT}
+    volumes:
+      - ${VOL_LOCALTIME}
+      - ${VOL_TIMEZONE}
+    networks:
+      network-share:
+        ipv4_address: ${IPV4_ZBX_AGENT}
+    restart: unless-stopped
+
+networks:
+  network-share:
+    external: true
+    ipam:
+      config:
+        - subnet: ${SUBNET}
