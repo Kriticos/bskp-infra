@@ -1,6 +1,6 @@
 services:
   ctr-grafana:
-    image: grafana/grafana:${RELEASE}
+    image: ${RELEASE}
     container_name: ${CONTAINER_NAME}
     environment:
       DB_SERVER_HOST: ${DB_SERVER_HOST}
@@ -18,7 +18,7 @@ services:
     volumes:
       - ${VOL_GRAFANA_PATH}
       # Descomente a linha abaixo apos copiar os arquivos grafana.ini e ldap.toml para a pasta config
-      - ${VOL_CONFIG_PATH}
+      #- ${VOL_CONFIG_PATH}
       - ${VOL_MAPS_PATH}
       - ${VOL_LOCALTIME}
       - ${VOL_TZ}
