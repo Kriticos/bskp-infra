@@ -42,5 +42,6 @@ RUN set -eux; \
 # -------------------------------------------------------------------
 # Configuração de logs e scripts
 # -------------------------------------------------------------------
-CMD ["/bin/bash", "-c", "cron && tail -f /var/log/cron.log"]
+CMD ["/bin/bash", "-c", "touch /var/log/cron.log && cron && tail -f /var/log/cron.log"]
+
 
