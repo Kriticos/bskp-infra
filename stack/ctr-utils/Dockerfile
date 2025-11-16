@@ -1,9 +1,11 @@
 FROM debian:bookworm
-
 LABEL maintainer="Kriticos"
+
 ENV DEBIAN_FRONTEND=noninteractive
 
+# -------------------------------------------------------------------
 # Pacotes essenciais + speedtest
+# -------------------------------------------------------------------
 RUN apt update && apt install -y \
     jq \
     gnupg \
@@ -20,14 +22,16 @@ RUN apt update && apt install -y \
     iputils-ping \
     lsb-release \
     ca-certificates && \
-    apt clean && rm -rf /var/lib/apt/lists/*
+    apt clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # -------------------------------------------------------------------
 # Instala Speedtest CLI (oficial da Ookla)
 # -------------------------------------------------------------------
 RUN curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | bash && \
     apt install -y speedtest && \
-    apt clean && rm -rf /var/lib/apt/lists/*
+    apt clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # -------------------------------------------------------------------
 # Instala Zabbix Sender diretamente (versão 7.2.9)
@@ -40,8 +44,11 @@ RUN set -eux; \
     rm -rf /var/lib/apt/lists/*
 
 # -------------------------------------------------------------------
-# Configuração de logs e scripts
+# Garantir log do cron existir mesmo após volumes
 # -------------------------------------------------------------------
-CMD ["/bin/bash", "-c", "touch /var/log/cron.log && cron && tail -f /var/log/cron.log"]
+CMD ["bash", "-c", "touch /var/log/cron.log && cron && tail -f /var/log/cron.log"]
 
-
+# -------------------------------------------------------------------
+# EntryPoint externo (mapeado via volume)
+# -------------------------------------------------------------------
+ENTRYPOINT ["/usr/local/bin/scripts/utils/entrypoint.sh"]
