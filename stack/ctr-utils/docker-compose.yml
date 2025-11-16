@@ -1,10 +1,10 @@
 services:
-  debian-tools:
-    container_name: ${SRV_NAME}
+  zbx-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: ${RELEASE}
-    restart: ${RESTART_POLICY}
-    tty: true
-    stdin_open: true
+    container_name: ${SRV_NAME}
     volumes:
       - ${VOL_SCRIPTS}
       - ${VOL_CRON}
@@ -12,4 +12,12 @@ services:
       - ${VOL_TIMEZONE}
     networks:
       network-share:
-        ipv4_address: ${CONTAINER_IP}
+        ipv4_address: ${IPV4_ZBX_SERVER_HOST}
+    restart: unless-stopped
+
+networks:
+  network-share:
+    external: true
+    ipam:
+      config:
+        - subnet: ${SUBNET}
