@@ -26,6 +26,7 @@ RUN apt update && apt install -y \
     mtr-tiny \
     htop \
     git \
+    bc \
     tzdata \
     lsb-release \
     ca-certificates \
