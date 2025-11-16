@@ -40,7 +40,6 @@ done
 echo "🔧 Ajustando permissões..."
 chmod -R 755 "$BASE_DIR/scripts"
 chmod -R 775 "$BASE_DIR/data"
-chmod -R 775 "$BASE_DIR/databases"
 chmod -R 775 "$BASE_DIR/stack/ctr-grafana/maps"
 chmod +x "$BASE_DIR/scripts/"*.sh
 
