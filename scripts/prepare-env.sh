@@ -42,7 +42,8 @@ chmod -R 755 "$BASE_DIR/scripts"
 chmod -R 775 "$BASE_DIR/data"
 chmod -R 775 "$BASE_DIR/stack/ctr-grafana/maps"
 chmod +x "$BASE_DIR/scripts/"*.sh
-
+chown -R 472:472 "$BASE_DIR/data/grafana"
+chmod -R 755 "$BASE_DIR/stack/ctr-grafana/maps"
 
 # Configurando rede Docker personalizada
 if ! docker network ls | grep -q "network-share"; then
