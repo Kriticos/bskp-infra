@@ -1,5 +1,5 @@
 services:
-  ctr-utils:
+  debian-tools:
     container_name: ${SRV_NAME}
     image: ${RELEASE}
     restart: ${RESTART_POLICY}
@@ -13,10 +13,3 @@ services:
     networks:
       network-share:
         ipv4_address: ${CONTAINER_IP}
-
-networks:
-  network-share:
-    external: true
-    ipam:
-      config:
-        - subnet: ${SUBNET}
