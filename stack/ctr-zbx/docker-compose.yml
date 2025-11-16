@@ -1,7 +1,8 @@
 services:
 
   ctr-zbx:
-    image: zabbix/zabbix-server-mysql:ubuntu-7.4-latest
+    build: .
+    image: zabbix-server-custom:7.4
     container_name: ${ZBX_CONTAINER_NAME}
     restart: unless-stopped
     environment:
