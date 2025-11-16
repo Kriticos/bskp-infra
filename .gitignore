@@ -21,4 +21,4 @@
 /stack/ctr-nginx/accounts
 
 # Database do BSKP (Ignorar pastas de configuração e dados)
-/databases
+/datab
