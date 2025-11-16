@@ -1,0 +1,23 @@
+services:
+  debian-tools:
+    container_name: ${SRV_NAME}
+    build: .
+    image: local/${IMAGE_NAME}
+    restart: ${RESTART_POLICY}
+    tty: true
+    stdin_open: true
+    volumes:
+      - ${VOL_SCRIPTS}
+      - ${VOL_CRON}
+      - ${VOL_LOCALTIME}
+      - ${VOL_TIMEZONE}
+    networks:
+      network-share:
+        ipv4_address: ${CONTAINER_IP}
+
+networks:
+  network-share:
+    external: true
+    ipam:
+      config:
+        - subnet: ${SUBNET}
