@@ -39,8 +39,8 @@ bskp/
 ## 1. Permissões das Pastas
 
 ```bash
-chown -R 472:472 config data maps
-chmod -R 755 config data maps
+chown -R 472:472 /bskp-pro/data/grafana
+chmod -R 755 /bskp-pro/stack/ctr-grafana/maps
 ```
 
 ## 2. Arquivo **.env**
@@ -122,9 +122,13 @@ Qualquer dúvida ou sugestão, abra uma issue ou envie uma contribuição!
 - Copie os arquivos grafana.ini e ldap.toml para a pasta config
 
 ```bash
-docker cp ctr-grafana:/etc/grafana/grafana.ini /bskp/ctr-grafana/config/grafana.ini
+mkdir /bskp-pro/data/grafana/config
 
-docker cp ctr-grafana:/etc/grafana/ldap.toml /bskp/ctr-grafana/config/ldap.toml
+chmod -R 755 /bskp-pro/data/grafana/config
+
+docker cp ctr-grafana:/etc/grafana/grafana.ini /bskp-pro/data/grafana/config/grafana.ini
+
+docker cp ctr-grafana:/etc/grafana/ldap.toml /bskp-pro/data/grafana/config/ldap.toml
 ```
 
 - Atualizar as permissões da pasta config
