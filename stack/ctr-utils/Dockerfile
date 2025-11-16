@@ -43,8 +43,3 @@ RUN wget -q https://repo.zabbix.com/zabbix/7.2/stable/debian/pool/main/z/zabbix/
 # Log do cron em runtime
 # -------------------------------------------------------------------
 CMD ["bash", "-c", "touch /var/log/cron.log && cron && tail -f /var/log/cron.log"]
-
-# -------------------------------------------------------------------
-# entrypoint externo — mapeado via volume
-# -------------------------------------------------------------------
-ENTRYPOINT ["/usr/local/bin/scripts/entrypoint.sh"]
