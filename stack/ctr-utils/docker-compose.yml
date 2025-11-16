@@ -1,7 +1,6 @@
 services:
-  debian-tools:
+  ctr-utils:
     container_name: ${SRV_NAME}
-    build: .
     image: ${RELEASE}
     restart: ${RESTART_POLICY}
     tty: true
