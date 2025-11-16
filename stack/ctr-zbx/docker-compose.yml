@@ -4,8 +4,6 @@ services:
     image: zabbix/zabbix-server-mysql:ubuntu-7.4-latest
     container_name: ${ZBX_CONTAINER_NAME}
     restart: unless-stopped
-    depends_on:
-      - ctr-mysql
     environment:
       DB_SERVER_HOST: ${MYSQL_HOST}
       MYSQL_USER: ${MYSQL_USER}
@@ -25,8 +23,6 @@ services:
     image: zabbix/zabbix-web-nginx-mysql:ubuntu-7.4-latest
     container_name: ${ZBX_FRONT_CONTAINER_NAME}
     restart: unless-stopped
-    depends_on:
-      - ctr-zbx
     environment:
       DB_SERVER_HOST: ${MYSQL_HOST}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
