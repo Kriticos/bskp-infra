@@ -42,10 +42,5 @@ RUN set -eux; \
 # -------------------------------------------------------------------
 # Configuração de logs e scripts
 # -------------------------------------------------------------------
-RUN touch /var/log/cron.log
+CMD ["/bin/bash", "-c", "cron && tail -f /var/log/cron.log"]
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-# Apenas o entrypoint — o cron será iniciado dentro dele
-ENTRYPOINT ["/entrypoint.sh"]
