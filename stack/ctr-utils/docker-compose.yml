@@ -14,7 +14,7 @@ services:
       network-share:
         ipv4_address: ${IPV4_ZBX_SERVER_HOST}
     restart: unless-stopped
-    entrypoint: ["/usr/local/bin/scripts/utils/entrypoint.sh"]
+    entrypoint: ["/usr/local/bin/scripts/entrypoint.sh"]
 networks:
   network-share:
     external: true
