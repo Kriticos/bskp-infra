@@ -22,3 +22,6 @@
 
 # Database do BSKP (Ignorar pastas de configuração e dados)
 /data
+
+# Cloudflare Tunnel Credentials
+/stack/ctr-cloudflare/tunnel/*.json
