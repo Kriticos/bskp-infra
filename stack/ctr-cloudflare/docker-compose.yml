@@ -3,10 +3,9 @@ services:
     image: cloudflare/cloudflared:latest
     container_name: ${CONTAINER_NAME}
     restart: unless-stopped
-    command: tunnel run bskp-tunnel
-    volumes:
-      - ./tunnel/config.yml:/etc/cloudflared/config.yml:ro
-      - ./tunnel/bskp-tunnel.json:/etc/cloudflared/bskp-tunnel.json:ro
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
     networks:
       network-share:
         ipv4_address: ${IPV4_CLOUDFLARE}
