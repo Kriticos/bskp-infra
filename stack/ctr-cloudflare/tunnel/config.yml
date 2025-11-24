@@ -1,0 +1,20 @@
+tunnel: bb479f0d-e056-4e6e-9984-ddfa5d7bcefb
+credentials-file: /etc/cloudflared/bb479f0d-e056-4e6e-9984-ddfa5d7bcefb.json
+
+ingress:
+  - hostname: zbx.blackskulp.com.br
+    service: http://192.168.0.20:4080
+
+  - hostname: portainer.blackskulp.com.br
+    service: https://192.168.0.20:9443
+
+  - hostname: haos.blackskulp.com.br
+    service: http://192.168.0.20:8123
+
+  - hostname: grafana.blackskulp.com.br
+    service: http://192.168.0.20:6080
+
+  - hostname: pve.blackskulp.com.br
+    service: https://192.168.0.10:8006
+
+  - service: http_status:404
