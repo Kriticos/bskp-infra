@@ -7,14 +7,12 @@ services:
     #command: ["tunnel", "--config", "/etc/cloudflared/config.yml", "run"]
     #command: tunnel run --config /etc/cloudflared/config.yml
     command:
-      - tunnel
-      - run
-      - --config
-      - /etc/cloudflared/config.yml
-      - --cred-file
-      - bb479f0d-e056-4e6e-9984-ddfa5d7bcefb
+    - tunnel
+    - run
+    - --config
+    - /etc/cloudflared/config.yml
     volumes:
-      - /bskp-pro/stack/ctr-cloudflare/tunnel:/etc/cloudflared:rw
+      - /bskp-pro/stack/ctr-cloudflare/tunnel:/etc/cloudflared:ro
     networks:
       network-share:
         ipv4_address: ${IPV4_CLOUDFLARE}
