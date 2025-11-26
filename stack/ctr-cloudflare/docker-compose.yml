@@ -5,12 +5,7 @@ services:
     restart: unless-stopped
     #command: tunnel run
     #command: ["tunnel", "--config", "/etc/cloudflared/config.yml", "run"]
-    #command: tunnel run --config /etc/cloudflared/config.yml
-    command:
-    - tunnel
-    - run
-    - --config
-    - /etc/cloudflared/config.yml
+    command: tunnel run --config /etc/cloudflared/config.yml
     volumes:
       - /bskp-pro/stack/ctr-cloudflare/tunnel:/etc/cloudflared:rw
     networks:
