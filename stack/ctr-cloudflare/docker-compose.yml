@@ -3,7 +3,8 @@ services:
     image: cloudflare/cloudflared:latest
     container_name: ${CONTAINER_NAME}
     restart: unless-stopped
-    command: tunnel run
+    #command: tunnel run
+    command: ["tunnel", "--config", "/etc/cloudflared/config.yml", "run"]
     volumes:
       - /bskp-pro/stack/ctr-cloudflare/tunnel:/etc/cloudflared:rw
     networks:
