@@ -1,20 +1,15 @@
 services:
   ctr-cloudflare:
     image: cloudflare/cloudflared:latest
-    container_name: ${CONTAINER_NAME}
+    container_name: ctr-cloudflare
     restart: unless-stopped
-    #command: tunnel run
-    #command: ["tunnel", "--config", "/etc/cloudflared/config.yml", "run"]
-    command: tunnel run --config /etc/cloudflared/config.yml
+    command: tunnel run
     volumes:
-      - /bskp-pro/stack/ctr-cloudflare/tunnel:/etc/cloudflared:rw
+      - /bskp-pro/stack/ctr-cloudflare/tunnel:/etc/cloudflared
     networks:
       network-share:
-        ipv4_address: ${IPV4_CLOUDFLARE}
+        ipv4_address: 172.18.0.50
 
 networks:
   network-share:
     external: true
-    ipam:
-      config:
-        - subnet: ${SUBNET}
