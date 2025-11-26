@@ -12,7 +12,7 @@ services:
       - --config
       - /etc/cloudflared/config.yml
       - --cred-file
-      - /etc/cloudflared/bb479f0d-e056-4e6e-9984-ddfa5d7bcefb.json
+      - bb479f0d-e056-4e6e-9984-ddfa5d7bcefb
     volumes:
       - /bskp-pro/stack/ctr-cloudflare/tunnel:/etc/cloudflared:rw
     networks:
