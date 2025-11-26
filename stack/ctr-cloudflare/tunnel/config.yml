@@ -1,6 +1,6 @@
 tunnel: bb479f0d-e056-4e6e-9984-ddfa5d7bcefb
 credentials-file: /etc/cloudflared/bb479f0d-e056-4e6e-9984-ddfa5d7bcefb.json
-origincert: /root/.cloudflared/cert.pem
+origincert: /etc/cloudflared/cert.pem
 
 
 ingress:
