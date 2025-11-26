@@ -1,6 +1,6 @@
 services:
   ctr-cloudflare:
-    image: cloudflare/cloudflared:2024.10.0
+    image: cloudflare/cloudflared:latest
     container_name: ${CONTAINER_NAME}
     restart: unless-stopped
     #command: tunnel run
@@ -12,7 +12,7 @@ services:
     - --config
     - /etc/cloudflared/config.yml
     volumes:
-      - /bskp-pro/stack/ctr-cloudflare/tunnel:/etc/cloudflared:ro
+      - /bskp-pro/stack/ctr-cloudflare/tunnel:/etc/cloudflared:rw
     networks:
       network-share:
         ipv4_address: ${IPV4_CLOUDFLARE}
