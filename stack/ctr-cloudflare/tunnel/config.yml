@@ -1,8 +1,6 @@
 tunnel: bb479f0d-e056-4e6e-9984-ddfa5d7bcefb
 credentials-file: /etc/cloudflared/bb479f0d-e056-4e6e-9984-ddfa5d7bcefb.json
 origincert: /etc/cloudflared/cert.pem
-protocol: http2
-
 
 ingress:
   - hostname: zbx.blackskulp.com.br
@@ -18,19 +16,16 @@ ingress:
     service: https://192.168.0.20:81
     originRequest:
       noTLSVerify: true
-      originServerName: localhost
 
   - hostname: portainer.blackskulp.com.br
     service: https://192.168.0.20:9443
     originRequest:
       noTLSVerify: true
-      originServerName: localhost
 
   - hostname: pve.blackskulp.com.br
     service: https://192.168.0.10:8006
     originRequest:
       noTLSVerify: true
-      originServerName: localhost
 
   - hostname: zbxproxy.blackskulp.com.br
     service: tcp://172.18.0.35:10051
