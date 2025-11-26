@@ -18,16 +18,19 @@ ingress:
     service: https://192.168.0.20:81
     originRequest:
       noTLSVerify: true
+      originServerName: localhost
 
   - hostname: portainer.blackskulp.com.br
     service: https://192.168.0.20:9443
     originRequest:
       noTLSVerify: true
+      originServerName: localhost
 
   - hostname: pve.blackskulp.com.br
     service: https://192.168.0.10:8006
     originRequest:
       noTLSVerify: true
+      originServerName: localhost
 
   - hostname: zbxproxy.blackskulp.com.br
     service: tcp://172.18.0.35:10051
