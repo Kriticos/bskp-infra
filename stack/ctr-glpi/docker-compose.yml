@@ -9,7 +9,7 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       PHP_TZ: ${PHP_TZ}
     ports:
-      - ${PORTS_GLPI}
+      - ${PORTS}
     volumes:
       - ${VOL_GLPI}
       - ${VOL_GLPI_CRON}
