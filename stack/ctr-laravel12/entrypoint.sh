@@ -102,6 +102,43 @@ prepare_laravel() {
   chown -R www-data:www-data storage bootstrap/cache || true
 }
 
+enable_adminlte_usage() {
+  cd "${APP_DIR}"
+
+  local view_path="resources/views/dashboard.blade.php"
+  if [ ! -f "${view_path}" ]; then
+    echo "[entrypoint] Criando view padrão AdminLTE"
+    cat <<'BLADE' > "${view_path}"
+@extends('adminlte::page')
+
+@section('title', 'Dashboard')
+
+@section('content_header')
+    <h1>Dashboard</h1>
+@stop
+
+@section('content')
+    <p>Bem-vindo ao painel AdminLTE.</p>
+@stop
+
+@section('css')
+    {{-- Adicione CSS customizado aqui --}}
+@stop
+
+@section('js')
+    <script>console.log('AdminLTE carregado');</script>
+@stop
+BLADE
+    chown www-data:www-data "${view_path}" || true
+  fi
+
+  local routes_file="routes/web.php"
+  if grep -q "view('welcome')" "${routes_file}"; then
+    echo "[entrypoint] Atualizando rota / para usar AdminLTE"
+    perl -0pi -e "s/return view\\('welcome'\\);/return view('dashboard');/" "${routes_file}"
+  fi
+}
+
 start_app() {
   cd "${APP_DIR}"
   if [ $# -eq 0 ]; then
@@ -132,4 +169,5 @@ trap shutdown TERM INT EXIT
 bootstrap_mysql
 start_mysql
 prepare_laravel
+enable_adminlte_usage
 start_app "$@"
