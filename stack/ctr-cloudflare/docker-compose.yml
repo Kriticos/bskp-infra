@@ -1,15 +1,19 @@
 services:
   ctr-cloudflare:
-    image: cloudflare/cloudflared:latest
-    container_name: ctr-cloudflare
+    image: ${RELEASE}
+    container_name: ${CONTAINER_NAME}
     restart: unless-stopped
     command: tunnel run
-    volumes:
-      - /bskp-pro/stack/ctr-cloudflare/tunnel:/etc/cloudflared
+    env_file: .env
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
     networks:
       network-share:
-        ipv4_address: 172.18.0.50
+        ipv4_address: ${IPV4_CLOUDFLARE}
 
 networks:
   network-share:
     external: true
+    ipam:
+      config:
+        - subnet: ${SUBNET}
