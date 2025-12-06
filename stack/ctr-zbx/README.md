@@ -78,7 +78,16 @@ FLUSH PRIVILEGES;
 -- 5) (Comando do cliente, não é SQL do servidor)
 exit
 ```
+> Caso tenha problemas na criação do banco pelo zabbix 
 
+```bash
+docker exec -it ctr-mysql mysql -u root -p
+
+SET GLOBAL log_bin_trust_function_creators = 1;
+
+DROP DATABASE zabbix;
+CREATE DATABASE zabbix CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+```
 ## Subindo o serviço
 
 Para iniciar todos os containers em segundo plano:
