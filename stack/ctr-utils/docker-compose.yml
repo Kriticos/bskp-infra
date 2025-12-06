@@ -10,10 +10,9 @@ services:
       - ${VOL_CRON}
       - ${VOL_DOCKER_SOCK}
       - ${VOL_LOCALTIME}
-      - ${VOL_TIMEZONE}
     networks:
       network-share:
-        ipv4_address: ${IPV4_ZBX_SERVER_HOST}
+        ipv4_address: ${CONTAINER_IP}
     restart: unless-stopped
     entrypoint: ["/usr/local/bin/scripts/entrypoint.sh"]
 networks:
