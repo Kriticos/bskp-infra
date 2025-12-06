@@ -1,4 +1,3 @@
-
 services:
   zbx-server:
     build:
@@ -11,12 +10,10 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      TZ: ${TZ}
     ports:
       - ${PORTS_ZBX}
     volumes:
-      - ${VOL_LOCALTIME}
-      - ${VOL_TIMEZONE}
       - ${VOL_ODBC_INI}
     networks:
       network-share:
@@ -24,7 +21,7 @@ services:
     restart: unless-stopped
 
   zbx-frontend:
-    image: zabbix/zabbix-web-apache-mysql:${RELEASE}
+    image: ${RELEASE}
     container_name: ${ZBX_SERVER_FRONTEND}
     environment:
       ZBX_SERVER_HOST: ${ZBX_SERVER_HOST}
@@ -32,29 +29,23 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      PHP_TZ: ${PHP_TZ}
+      PHP_TZ: ${TZ}
     ports:
       - ${PORTS_FRONTEND}
-    volumes:
-      - ${VOL_LOCALTIME}
-      - ${VOL_TIMEZONE}
     networks:
       network-share:
         ipv4_address: ${IPV4_ZBX_FRONTEND}
     restart: unless-stopped
 
   zbx-agent:
-    image: zabbix/zabbix-agent2:${RELEASE}
+    image: ${RELEASE}
     container_name: ${ZBX_SERVER_AGENT}
     environment:
       ZBX_HOSTNAME: ${ZBX_SERVER_HOST}
       ZBX_SERVER_HOST: ${ZBX_SERVER_HOST}
+      TZ: ${TZ}
     ports:
       - ${PORTS_AGENT}
-    volumes:
-      - ${VOL_LOCALTIME}
-      - ${VOL_TIMEZONE}
     networks:
       network-share:
         ipv4_address: ${IPV4_ZBX_AGENT}
