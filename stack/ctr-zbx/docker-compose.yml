@@ -38,7 +38,7 @@ services:
     restart: unless-stopped
 
   zbx-agent:
-    image: ${RELEASE}
+    image: ${RELEASE_AGENT}
     container_name: ${ZBX_SERVER_AGENT}
     environment:
       ZBX_HOSTNAME: ${ZBX_SERVER_HOST}
