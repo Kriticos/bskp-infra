@@ -15,6 +15,7 @@ DATA_DIRS=(
   "$BASE_DIR/data/cloudflare"
   "$BASE_DIR/data/utils"
   "$BASE_DIR/data/portainer"
+  "$BASE_DIR/data/home-assistant"
 )
 
 # Pastas de backups

@@ -1,19 +1,19 @@
 services:
   ctr-haos:
-    build: .
+    image: homeassistant/home-assistant:stable
     container_name: ${CONTAINER_NAME}
     restart: unless-stopped
+
+    # Recomendado pelo Home Assistant para detectar dispositivos na rede
+    network_mode: host
+
+    # Necessário para acessar dispositivos USB, BLE, Bluetooth Proxy
     privileged: true
+
     volumes:
       - ${VOL_CONFIG}
       - ${VOL_TZ}
       - ${VOL_LOCALTIME}
-    ports:
-      - "8123:8123"
-    networks:
-      network-share:
-        ipv4_address: ${IPV4_HA}
 
-networks:
-  network-share:
-    external: true
+    environment:
+      - TZ=${TZ}
