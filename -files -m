@@ -1,0 +1,137 @@
+[1mdiff --git a/.gitignore b/.gitignore[m
+[1mindex e7ac23e..abf32be 100644[m
+[1m--- a/.gitignore[m
+[1m+++ b/.gitignore[m
+[36m@@ -26,3 +26,5 @@[m
+ # Cloudflare Tunnel Credentials[m
+ /stack/ctr-cloudflare/tunnel/*.json[m
+ /stack/ctr-cloudflare/tunnel/*.perm[m
+[32m+[m
+[32m+[m[32m/scripts/fix-network.sh[m
+[1mdiff --git a/scripts/prepare.sh b/scripts/prepare.sh[m
+[1mindex c2d1fdd..d4e2e3b 100755[m
+[1m--- a/scripts/prepare.sh[m
+[1m+++ b/scripts/prepare.sh[m
+[36m@@ -15,6 +15,7 @@[m [mDATA_DIRS=([m
+   "$BASE_DIR/data/cloudflare"[m
+   "$BASE_DIR/data/utils"[m
+   "$BASE_DIR/data/portainer"[m
+[32m+[m[32m  "$BASE_DIR/data/ansible"[m
+ )[m
+ [m
+ # Pastas de backups[m
+[1mdiff --git a/stack/ctr-ansible/Dockerfile b/stack/ctr-ansible/Dockerfile[m
+[1mnew file mode 100644[m
+[1mindex 0000000..98e5a3c[m
+[1m--- /dev/null[m
+[1m+++ b/stack/ctr-ansible/Dockerfile[m
+[36m@@ -0,0 +1,70 @@[m
+[32m+[m[32mFROM debian:12-slim[m
+[32m+[m
+[32m+[m[32mENV DEBIAN_FRONTEND=noninteractive[m
+[32m+[m
+[32m+[m[32m# ---------------------------------------------------------------[m
+[32m+[m[32m# Instalar dependências base do sistema[m
+[32m+[m[32m# ---------------------------------------------------------------[m
+[32m+[m[32mRUN apt update && \[m
+[32m+[m[32m    apt install -y \[m
+[32m+[m[32m        curl \[m
+[32m+[m[32m        gnupg \[m
+[32m+[m[32m        python3 \[m
+[32m+[m[32m        python3-pip \[m
+[32m+[m[32m        python3-dev \[m
+[32m+[m[32m        gcc \[m
+[32m+[m[32m        g++ \[m
+[32m+[m[32m        make \[m
+[32m+[m[32m        unixodbc \[m
+[32m+[m[32m        unixodbc-dev \[m
+[32m+[m[32m        krb5-user \[m
+[32m+[m[32m        libkrb5-dev \[m
+[32m+[m[32m        libkrb5-3 \[m
+[32m+[m[32m        sshpass \[m
+[32m+[m[32m        nano \[m
+[32m+[m[32m        iputils-ping \[m
+[32m+[m[32m        git && \[m
+[32m+[m[32m    rm -rf /var/lib/apt/lists/*[m
+[32m+[m
+[32m+[m[32m# ---------------------------------------------------------------[m
+[32m+[m[32m# Repositório Microsoft para ODBC Driver 18 – Método correto[m
+[32m+[m[32m# ---------------------------------------------------------------[m
+[32m+[m[32mRUN apt-get update && \[m
+[32m+[m[32m    apt-get install -y curl apt-transport-https gnupg unixodbc unixodbc-dev && \[m
+[32m+[m[32m    curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \[m
+[32m+[m[32m    curl https://packages.microsoft.com/config/ubuntu/22.04/prod.list -o /etc/apt/sources.list.d/mssql-release.list && \[m
+[32m+[m[32m    apt-get update && \[m
+[32m+[m[32m    ACCEPT_EULA=Y apt-get install -y msodbcsql18 mssql-tools18 && \[m
+[32m+[m[32m    apt-get clean && rm -rf /var/lib/apt/lists/*[m
+[32m+[m
+[32m+[m
+[32m+[m[32m# ---------------------------------------------------------------[m
+[32m+[m[32m# Instalar Python libs: pyodbc + WinRM + Ansible[m
+[32m+[m[32m# ---------------------------------------------------------------[m
+[32m+[m[32mRUN pip3 install --upgrade pip --break-system-packages && \[m
+[32m+[m[32m    pip3 install --break-system-packages \[m
+[32m+[m[32m        pyodbc \[m
+[32m+[m[32m        ansible \[m
+[32m+[m[32m        pywinrm \[m
+[32m+[m[32m        pywinrm[credssp] \[m
+[32m+[m[32m        requests-ntlm \[m
+[32m+[m[32m        requests-kerberos \[m
+[32m+[m[32m        pykerberos[m
+[32m+[m
+[32m+[m[32m# ---------------------------------------------------------------[m
+[32m+[m[32m# Instalar coleções do Ansible[m
+[32m+[m[32m# ---------------------------------------------------------------[m
+[32m+[m[32mRUN ansible-galaxy collection install \[m
+[32m+[m[32m        ansible.windows \[m
+[32m+[m[32m        community.windows \[m
+[32m+[m[32m        community.general[m
+[32m+[m
+[32m+[m[32m# ---------------------------------------------------------------[m
+[32m+[m[32m# Diretório padrão para playbooks[m
+[32m+[m[32m# ---------------------------------------------------------------[m
+[32m+[m[32mWORKDIR /playbooks[m
+[32m+[m
+[32m+[m[32m# ---------------------------------------------------------------[m
+[32m+[m[32m# Entrar sempre no bash[m
+[32m+[m[32m# ---------------------------------------------------------------[m
+[32m+[m[32mCMD ["/bin/bash"][m
+[1mdiff --git a/stack/ctr-ansible/docker-compose.yml b/stack/ctr-ansible/docker-compose.yml[m
+[1mnew file mode 100644[m
+[1mindex 0000000..223dbf0[m
+[1m--- /dev/null[m
+[1m+++ b/stack/ctr-ansible/docker-compose.yml[m
+[36m@@ -0,0 +1,17 @@[m
+[32m+[m[32mservices:[m
+[32m+[m[32m  ctr-ansible:[m
+[32m+[m[32m    build: .[m
+[32m+[m[32m    container_name: ${CONTAINER_NAME}[m
+[32m+[m[32m    restart: unless-stopped[m
+[32m+[m[32m    volumes:[m
+[32m+[m[32m      - ${VOL_PLAYBOOKS}[m
+[32m+[m[32m      - ${VOL_LOCALTIME}[m
+[32m+[m[32m    networks:[m
+[32m+[m[32m      network-share:[m
+[32m+[m[32m        ipv4_address: ${IPV4_ANSIBLE}[m
+[32m+[m[32m    stdin_open: true[m
+[32m+[m[32m    tty: true[m
+[32m+[m
+[32m+[m[32mnetworks:[m
+[32m+[m[32m  network-share:[m
+[32m+[m[32m    external: true[m
+[1mdiff --git a/stack/ctr-ansible/playbooks/hosts.ini b/stack/ctr-ansible/playbooks/hosts.ini[m
+[1mnew file mode 100644[m
+[1mindex 0000000..7770441[m
+[1m--- /dev/null[m
+[1m+++ b/stack/ctr-ansible/playbooks/hosts.ini[m
+[36m@@ -0,0 +1,10 @@[m
+[32m+[m[32m[windows_ad][m
+[32m+[m[32mvm-win2022 ansible_host=172.40.50.62[m
+[32m+[m
+[32m+[m[32m[windows_ad:vars][m
+[32m+[m[32mansible_user=Administrator[m
+[32m+[m[32mansible_password=Brasil2014[m
+[32m+[m[32mansible_connection=winrm[m
+[32m+[m[32mansible_winrm_transport=ntlm[m
+[32m+[m[32mansible_winrm_server_cert_validation=ignore[m
+[32m+[m[32mansible_port=5985[m
