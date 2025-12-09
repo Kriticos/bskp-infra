@@ -1,0 +1,17 @@
+services:
+  ctr-ansible:
+    build: .
+    container_name: ${CONTAINER_NAME}
+    restart: unless-stopped
+    volumes:
+      - ${VOL_PLAYBOOKS}
+      - ${VOL_LOCALTIME}
+    networks:
+      network-share:
+        ipv4_address: ${IPV4_ANSIBLE}
+    stdin_open: true
+    tty: true
+
+networks:
+  network-share:
+    external: true
