@@ -15,7 +15,11 @@ DATA_DIRS=(
   "$BASE_DIR/data/cloudflare"
   "$BASE_DIR/data/utils"
   "$BASE_DIR/data/portainer"
+<<<<<<< Updated upstream
   "$BASE_DIR/data/home-assistant"
+=======
+  "$BASE_DIR/data/ansible"
+>>>>>>> Stashed changes
 )
 
 # Pastas de backups

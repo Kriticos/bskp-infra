@@ -26,3 +26,5 @@
 # Cloudflare Tunnel Credentials
 /stack/ctr-cloudflare/tunnel/*.json
 /stack/ctr-cloudflare/tunnel/*.perm
+
+/scripts/fix-network.sh
