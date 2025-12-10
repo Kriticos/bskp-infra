@@ -1,70 +1,53 @@
+###############################################################
+# STAGE 1 - BUILDER (instala Ansible + WinRM)
+###############################################################
+FROM debian:12-slim AS builder
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Dependências mínimas para build
+RUN apt update && apt install -y \
+        python3 python3-pip python3-venv \
+        curl gnupg ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Criar ambiente virtual Python + libs necessárias
+RUN python3 -m venv /venv && \
+    /venv/bin/pip install --upgrade pip && \
+    /venv/bin/pip install \
+        ansible \
+        pywinrm \
+        requests-ntlm
+
+###############################################################
+# STAGE 2 - FINAL IMAGE (ultra minimalista)
+###############################################################
 FROM debian:12-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# ---------------------------------------------------------------
-# Instalar dependências base do sistema
-# ---------------------------------------------------------------
-RUN apt update && \
-    apt install -y \
+# Dependências runtime mínimas
+RUN apt update && apt install -y \
+        python3 python3-pip python3-venv \
+        ca-certificates \
         curl \
-        gnupg \
-        python3 \
-        python3-pip \
-        python3-dev \
-        gcc \
-        g++ \
-        make \
-        unixodbc \
-        unixodbc-dev \
-        krb5-user \
-        libkrb5-dev \
-        libkrb5-3 \
-        sshpass \
         nano \
-        iputils-ping \
-        git && \
-    rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 
-# ---------------------------------------------------------------
-# Repositório Microsoft para ODBC Driver 18 – Método correto
-# ---------------------------------------------------------------
-RUN apt-get update && \
-    apt-get install -y curl apt-transport-https gnupg unixodbc unixodbc-dev && \
-    curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
-    curl https://packages.microsoft.com/config/ubuntu/22.04/prod.list -o /etc/apt/sources.list.d/mssql-release.list && \
-    apt-get update && \
-    ACCEPT_EULA=Y apt-get install -y msodbcsql18 mssql-tools18 && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+# Copiar ambiente virtual com Ansible + WinRM
+COPY --from=builder /venv /venv
 
+# Criar usuário não-root
+RUN useradd -m -s /bin/bash ansible && \
+    mkdir -p /playbooks && chown -R ansible:ansible /playbooks
 
-# ---------------------------------------------------------------
-# Instalar Python libs: pyodbc + WinRM + Ansible
-# ---------------------------------------------------------------
-RUN pip3 install --upgrade pip --break-system-packages && \
-    pip3 install --break-system-packages \
-        pyodbc \
-        ansible \
-        pywinrm \
-        pywinrm[credssp] \
-        requests-ntlm \
-        requests-kerberos \
-        pykerberos
+# Editor padrão para o Ansible Vault
+ENV ANSIBLE_EDITOR=nano
 
-# ---------------------------------------------------------------
-# Instalar coleções do Ansible
-# ---------------------------------------------------------------
-RUN ansible-galaxy collection install \
-        ansible.windows \
-        community.windows \
-        community.general
+# PATH ajustado
+ENV PATH="/venv/bin:${PATH}"
 
-# ---------------------------------------------------------------
-# Diretório padrão para playbooks
-# ---------------------------------------------------------------
 WORKDIR /playbooks
+USER ansible
 
-# ---------------------------------------------------------------
-# Entrar sempre no bash
-# ---------------------------------------------------------------
 CMD ["/bin/bash"]
