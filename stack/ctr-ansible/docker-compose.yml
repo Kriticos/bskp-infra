@@ -3,6 +3,7 @@ services:
     build: .
     container_name: ${CONTAINER_NAME}
     restart: unless-stopped
+    user: "ansible"
     volumes:
       - ${VOL_PLAYBOOKS}
       - ${VOL_LOCALTIME}
