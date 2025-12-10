@@ -1,0 +1,9 @@
+---
+- name: Teste de conexão com Windows
+  hosts: windows_ad
+  vars_files:
+    - vars/secrets.yml
+
+  tasks:
+    - name: Test ping
+      ansible.windows.win_ping:
