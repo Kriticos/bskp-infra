@@ -28,3 +28,7 @@
 /stack/ctr-cloudflare/tunnel/*.perm
 
 /scripts/fix-network.sh
+
+
+/stack/ctr-ansible/playbooks/logs/ansible.log
+/stack/ctr-ansible/playbooks/vars/secrets.yml
